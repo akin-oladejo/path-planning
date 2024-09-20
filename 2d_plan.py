@@ -39,14 +39,14 @@ walls = [
 ]
 
 # Define doors
-doors = [
-    (355, 200, 10, 60),  # Door between left rooms
-    (500, 305, 60, 10),  # Door to bottom right room
-]
+# doors = [
+#     (355, 200, 10, 60),  # Door between left rooms
+#     (500, 305, 60, 10),  # Door to bottom right room
+# ]
 
 # Convert walls and doors to Rectangle structs
 c_walls = [ffi.new("Rectangle *", [x, y, w, h]) for x, y, w, h in walls]
-c_doors = [ffi.new("Rectangle *", [x, y, w, h]) for x, y, w, h in doors]
+# c_doors = [ffi.new("Rectangle *", [x, y, w, h]) for x, y, w, h in doors]
 
 # Main game loop
 while not rl.WindowShouldClose():
@@ -61,14 +61,16 @@ while not rl.WindowShouldClose():
         rl.DrawRectangleRec(wall[0], WALL_COLOR)
 
     # Draw doors
-    for door in c_doors:
-        rl.DrawRectangleRec(door[0], DOOR_COLOR)
+    # for door in c_doors:
+    #     rl.DrawRectangleRec(door[0], DOOR_COLOR)
 
     # Add labels to rooms
-    rl.DrawText(b"Living Room", 100, 150, 20, BLACK)
-    rl.DrawText(b"Kitchen", 500, 150, 20, BLACK)
-    rl.DrawText(b"Bedroom", 100, 400, 20, BLACK)
-    rl.DrawText(b"Bathroom", 500, 400, 20, BLACK)
+    rl.DrawText(b"Bedroom 1", 100, 200, 20, RED)
+    rl.DrawText(b"Bedroom 2", 1400, 400, 20, RED)
+    rl.DrawText(b"Living Room", 550, 150, 20, RED)
+    rl.DrawText(b"Kitchen", 550, 500, 20, RED)
+    rl.DrawText(b"Bathroom", 1000, 200, 20, RED)
+    rl.DrawText(b"Laundry", 1000, 300, 20, RED)
 
     rl.EndDrawing()
 
