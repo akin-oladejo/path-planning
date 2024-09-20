@@ -12,30 +12,41 @@ rl.SetTargetFPS(60)
 # Define colors
 WALL_COLOR = BLACK
 FLOOR_COLOR = LIGHTGRAY
-FURNITURE_COLOR = PINK
+FURNITURE_COLOR = DARKPURPLE
+
+# bot arguments
+BOT_SPEED = 5
+BOT_SIZE = 20
+BOT_X = 1230
+BOT_Y = 200
+
+# Create Vector2 structures to store vertices
+v1 = ffi.new("Vector2 *")
+v2 = ffi.new("Vector2 *")
+v3 = ffi.new("Vector2 *")
 
 # Define walls and rooms
 walls = [
     # Outer walls
-    (50, 50, 1604, 4),   # Top
-    (50, 50, 4, 600),   # Left
-    (1650, 50, 4, 600),  # Right
-    (50, 650, 1604, 4),  # Bottom
+    (50, 50, 1604, 4), # Top
+    (50, 50, 4, 600), # Left
+    (1650, 50, 4, 600), # Right
+    (50, 650, 1604, 4), # Bottom
 
     # Vertical inner walls
-    (450, 50, 7, 50),
-    (450, 200, 7, 450),
+    (450, 50, 7, 50), 
+    (450, 200, 7, 450), 
 
-    (950, 50, 7, 350),
+    (950, 50, 7, 350), 
 
-    (1250, 50, 7, 450),
-    (1250, 600, 7, 50),
+    (1250, 50, 7, 450), 
+    (1250, 600, 7, 50), 
 
     # Horizontal inner walls
-    (950, 250, 150, 7),
-    (1200, 250, 50, 7),
+    (950, 250, 150, 7), 
+    (1200, 250, 50, 7), 
 
-    (950, 400, 110, 7),
+    (950, 400, 110, 7), 
 ]
 
 furniture = [
@@ -57,10 +68,10 @@ furniture = [
     (960, 260, 50, 70), # washer
 
     # bedroom 2
-    (1337, 54, 50, 40), # bedside drawer 1
+    (1337, 54, 50, 40), # bedside drawer 3
     (1390, 54, 150, 220), # bed
-    (1544, 54, 50, 40), # bedside drawer 2
-    (1500, 600, 150, 50), # wardrobe 1
+    (1544, 54, 50, 40), # bedside drawer 4
+    (1500, 600, 150, 50), # wardrobe 2
 ]
 
 # Define doors
@@ -82,6 +93,20 @@ while not rl.WindowShouldClose():
     rl.BeginDrawing()
     rl.ClearBackground(WHITE)
 
+    # Update triangle position based on key presses
+    if rl.IsKeyDown(rl.KEY_RIGHT):
+        BOT_X += BOT_SPEED
+    if rl.IsKeyDown(rl.KEY_LEFT):
+        BOT_X -= BOT_SPEED
+    if rl.IsKeyDown(rl.KEY_DOWN):
+        BOT_Y += BOT_SPEED
+    if rl.IsKeyDown(rl.KEY_UP):
+        BOT_Y -= BOT_SPEED
+
+    # Keep the triangle within the screen bounds
+    BOT_X = max(BOT_SIZE+54, min(SCREEN_WIDTH - BOT_SIZE - 50, BOT_X))
+    BOT_Y = max(BOT_SIZE+54, min(SCREEN_HEIGHT - BOT_SIZE - 50, BOT_Y))
+
     # Draw floors
     rl.DrawRectangle(50, 50, 1600, 600, FLOOR_COLOR)
 
@@ -93,8 +118,18 @@ while not rl.WindowShouldClose():
     for furniture in c_furniture:
         rl.DrawRectangleRec(furniture[0], FURNITURE_COLOR)
 
+    # Draw bot
+    # Draw the triangle
+    rl.DrawTriangle(
+        ffi.new("Vector2 *", [BOT_X, (BOT_Y - BOT_SIZE)])[0],
+        ffi.new("Vector2 *", [(BOT_X - BOT_SIZE), (BOT_Y + BOT_SIZE)])[0],
+        ffi.new("Vector2 *", [(BOT_X + BOT_SIZE), (BOT_Y + BOT_SIZE)])[0],
+        BLUE
+    )
+
     # for i in center_table:
     rl.DrawCircle(700, 300, 100, FURNITURE_COLOR)
+
     # Draw doors
     # for door in c_doors:
     #     rl.DrawRectangleRec(door[0], DOOR_COLOR)

@@ -7,3 +7,4 @@ Implementations of different path planning algorithms so a robot can navigate wi
 ### Assumptions
 - No doors
 - Map provided (ignoring perception)
+- Constant velocity
