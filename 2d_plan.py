@@ -1,7 +1,6 @@
 from raylib.colors import *
 from raylib import rl, ffi
-
-# Initialize window
+from time import time
 
 # Initialize window
 SCREEN_WIDTH = 1700
@@ -15,15 +14,16 @@ FLOOR_COLOR = LIGHTGRAY
 FURNITURE_COLOR = DARKPURPLE
 
 # bot arguments
-BOT_SPEED = 5
-BOT_SIZE = 20
+BOT_SPEED = 3
+ACCELERATION = 0.3
+BOT_SIZE = 15
 BOT_X = 1230
 BOT_Y = 200
 
 # Create Vector2 structures to store vertices
-v1 = ffi.new("Vector2 *")
-v2 = ffi.new("Vector2 *")
-v3 = ffi.new("Vector2 *")
+# v1 = ffi.new("Vector2 *")
+# v2 = ffi.new("Vector2 *")
+# v3 = ffi.new("Vector2 *")
 
 # Define walls and rooms
 walls = [
@@ -95,7 +95,11 @@ while not rl.WindowShouldClose():
 
     # Update triangle position based on key presses
     if rl.IsKeyDown(rl.KEY_RIGHT):
+    #    t = 0
+    #    while rl.IsKeyDown(rl.KEY_RIGHT):
+    #     t += 1
         BOT_X += BOT_SPEED
+        # BOT_X += BOT_SPEED + t * ACCELERATION
     if rl.IsKeyDown(rl.KEY_LEFT):
         BOT_X -= BOT_SPEED
     if rl.IsKeyDown(rl.KEY_DOWN):
@@ -128,7 +132,7 @@ while not rl.WindowShouldClose():
     )
 
     # for i in center_table:
-    rl.DrawCircle(700, 300, 100, FURNITURE_COLOR)
+    rl.DrawCircle(700, 300, 50, FURNITURE_COLOR)
 
     # Draw doors
     # for door in c_doors:
