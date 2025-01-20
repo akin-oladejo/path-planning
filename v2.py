@@ -1,20 +1,20 @@
 from raylib.colors import *
 from raylib import rl, ffi
-import math
 
 def main():
     # Define colors
     EGO_COLOR = LIME
 
     # Initialize window
-    SCREEN_WIDTH = 1300
-    SCREEN_HEIGHT = 900
-    rl.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, b"Parking Lot")
+    SCREEN_WIDTH = 735
+    SCREEN_HEIGHT = 980
+    rl.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, b"Vacuum bot")
     rl.SetTargetFPS(60)
 
-    # Load vehicles
-    ego = rl.LoadTexture(b"assets/ego.png")
-    vehicle = rl.LoadTexture(b"assets/car2.png")
+    # Load textures
+    # ego = rl.LoadTexture(b"assets/ego.png")
+    # vehicle = rl.LoadTexture(b"assets/car2.png")
+    bg = rl.LoadTexture(b'assets/floor-plan.png')
 
     # Rotation angle (in degrees)
     rotation = 30.0
@@ -75,6 +75,8 @@ def main():
         # Draw map area
         rl.DrawRectangle(0, 150, 1300, 750, RAYWHITE)
 
+        rl.DrawTextureEx(bg, (0,0), 0.0, 0.6, WHITE)
+
         # rl.Draw
 
         # Draw the ego
@@ -82,11 +84,11 @@ def main():
 
         # Draw the ego texture
         # rl.DrawTextureEx(ego, EGO_POS[0], rotation + EGO_STEER_ANGLE, scale, WHITE)
-        rl.DrawTextureEx(ego, (EGO_POS[0].x + ego.width//2, EGO_POS[0].y + ego.height//2,), EGO_STEER_ANGLE, scale, WHITE)
+        # rl.DrawTextureEx(ego, (EGO_POS[0].x + ego.width//2, EGO_POS[0].y + ego.height//2,), EGO_STEER_ANGLE, scale, WHITE)
 
 
-        for i in range(100, 500, 100):
-            rl.DrawTextureEx(vehicle, (i, 200), 0.0, scale, WHITE)
+        # for i in range(100, 500, 100):
+        #     rl.DrawTextureEx(vehicle, (i, 200), 0.0, scale, WHITE)
 
 
         # for i in center_table:
@@ -105,6 +107,8 @@ def main():
 
         rotation_b = f"Rotation: {rotation}".encode('utf-8')
         rl.DrawText(rotation_b, 20, 80, 20, BLACK)
+
+        rl.DrawText(b'Plan from https://dolive.media/496/', 20, 940, 15, RED)
         # rl.DrawText(b"Bathroom", 1050, 150, 20, RED)
         # rl.DrawText(b"Laundry", 1050, 320, 20, RED)
 
